@@ -1,4 +1,5 @@
 import pymongo
+import sys
 
 class WorldCup:
 
@@ -10,4 +11,4 @@ class WorldCup:
         try:
             self.db.games.insert(game)
         except:
-            return
+            print("Unexpected error:", sys.exc_info()[0])
