@@ -3,6 +3,8 @@ from datetime import datetime
 import calendar
 import sys
 
+buckets = {}
+
 connection = pymongo.MongoClient("localhost", 27017)
 
 db = connection.worldcup
@@ -23,29 +25,39 @@ def total_tweets_interval(start, end):
 
     return total
 
-def generate_time_interval(day, month, gametime):
+def generate_time_interval(day, month, hour, minute):
 
-    starthour = int(gametime[:2])
-    if starthour < 22:
-        endhour = starthour + 2
+    h = str(hour)
+    m = str(minute)
+    if minute < 59:
+        m2 = str(minute + 1)
+        h2 = str(hour)
     else:
-        endhour = 24 - starthour
+        m2 = "00"
+        h2 = str(hour + 1)
 
-    startminute = int(gametime[3:5])
-    if startminute < 30:
-        endminute = startminute + 30
-    else:
-        endhour += 1
-        endminute = 30 - (60 - startminute)
+    s = h + ":" + m + ":00"
+    e = h2 + ":" + m2 + ":00"
 
-    endgametime = str(endhour) + ":" + str(endminute) + ":" + gametime[6:]
-
-    start = "2014-" + month + "-" + day + " " + gametime
-    end = "2014-" + month + "-" + day + " " + endgametime
+    start = "2014-" + month + "-" + day + " " + s
+    end = "2014-" + month + "-" + day + " " + e
 
     return start, end
 
-# function calls for first game, Brasil v. Croatia
-# would calculate total tweets throughout game
-x, y = generate_time_interval("12", "6", "17:00:00")
-tot = total_tweets_interval(x, y)
+def match_time_intervals(day, month, gametime):
+    hour = int(gametime[:2])
+    minute = int(gametime[3:5])
+    for m in range(150):
+        if minute < 59:
+            x, y = generate_time_interval(day, month, hour, minute)
+            minute += 1
+        else:
+            x, y = generate_time_interval(day, month, hour, minute)
+            hour += 1
+            minute = 0
+
+        tot = total_tweets_interval(x, y)
+        buckets[x] = tot
+
+# function call for first game, Brasil v. Croatia
+match_time_intervals("12", "6", "17:00:00")
