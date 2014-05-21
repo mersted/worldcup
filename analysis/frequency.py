@@ -25,6 +25,9 @@ def total_tweets_interval(start, end):
 
     return total
 
+def average_tweets_interval(total, time):
+    return total / time
+
 def generate_time_interval(day, month, hour, minute):
 
     h = str(hour)
