@@ -3,8 +3,6 @@ from datetime import datetime
 import calendar
 import sys
 
-buckets = {}
-
 connection = pymongo.MongoClient("localhost", 27017)
 
 db = connection.worldcup
@@ -48,8 +46,12 @@ def generate_time_interval(day, month, hour, minute):
     return start, end
 
 def match_time_intervals(day, month, gametime):
+
+    buckets = {}
+
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
+    
     for m in range(150):
         if minute < 59:
             x, y = generate_time_interval(day, month, hour, minute)
@@ -62,5 +64,16 @@ def match_time_intervals(day, month, gametime):
         tot = total_tweets_interval(x, y)
         buckets[x] = tot
 
+    return buckets
+
+def create_text_file(dict, filename):
+
+    f = open(filename, "w")
+    print("Creating text file called ", filename)
+
+    for (interval, total) in dict.items():
+        f.write(interval + "\t" + str(total) + "\n")
+
 # function call for first game, Brasil v. Croatia
-match_time_intervals("12", "6", "17:00:00")
+results = match_time_intervals("12", "6", "17:00:00")
+create_text_file(results, "BRAvCRO.txt")
