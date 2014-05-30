@@ -6,7 +6,7 @@ import time
 
 
 if __name__ == '__main__':
-    words = "seattle,seahawks,wilson,denver,broncos,manning,sb48,superbowl"
+    words = "brasil,croatia,worldcup,wc14,neymar,modric,bra,cro"
     pipes = []
     for word in words.split(","):
         pipes.append(RedisPipe(word, period=15, db=1, ns="track:" + word))
@@ -14,4 +14,3 @@ if __name__ == '__main__':
     pipes.append(FilePipe())
     t = TwitterFilterStream(words, pipes=pipes)
     t.start()
-
