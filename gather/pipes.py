@@ -2,7 +2,7 @@ import math
 import pymongo
 import redis
 import time
-import re, string 
+import re, string
 
 class PrintPipe:
     def autoparse(self): return False;
@@ -15,7 +15,7 @@ class RedisPipe:
         self.r = redis.StrictRedis(host=host, port=port, db=db)
         self.ns = ns
         self.word = word
-        self.pattern = re.compile(".*" + word + ".*", flags=re.I) 
+        self.pattern = re.compile(".*" + word + ".*", flags=re.I)
         self.prev = 0
         self.period = period
 
@@ -26,12 +26,12 @@ class RedisPipe:
             self.prev = time.time()
             self.r.setnx(self.startKey(), time.time());
             self.r.set(self.periodKey(), self.period)
-        timeElapsed = time.time() - self.prev 
+        timeElapsed = time.time() - self.prev
         if u'text' in tweet and self.pattern.match(tweet[u'text']):
             count = self.r.incr(self.curKey())
         if timeElapsed > self.period:
             self.onNextTime()
-            self.prev = time.time() 
+            self.prev = time.time()
 
     def curKey(self):
         return self.ns + ":" + "cur"
@@ -43,7 +43,7 @@ class RedisPipe:
         return self.ns + ":" + "end"
 
     def periodKey(self):
-        return self.ns + ":period" 
+        return self.ns + ":period"
 
     def onNextTime(self):
         curVal = self.r.getset(self.curKey(), 0)
@@ -55,8 +55,8 @@ class RedisPipe:
 class MongoPipe:
     def __init__(self, host="localhost", port=27017):
         self.m = pymongo.MongoClient(host, port)
-        self.db = self.m.superbowl
-        self.writeBuf = [] 
+        self.db = self.m.worldcup
+        self.writeBuf = []
 
     def autoparse(self): return True;
 
@@ -64,7 +64,7 @@ class MongoPipe:
         if u'text' not in tweet and 'text' not in tweet:
             return
         try:
-            parsed = { 
+            parsed = {
                       'text' : tweet[u'text'],
                       'created_at' : tweet[u'created_at'],
                       'id' : tweet[u'id'],
