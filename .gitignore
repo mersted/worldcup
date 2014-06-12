@@ -1,0 +1,6 @@
+*.pyc
+*.json
+*.tsv
+*.swp
+gather/api_keys.py
+
