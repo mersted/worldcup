@@ -18,26 +18,35 @@ def total_tweets_interval(start, end):
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}}
     try:
       total = tweets.count(query)
+      return total
     except:
       print("Unexpected error:", sys.exc_info()[0])
 
-    return total
+
 
 def average_tweets_interval(total, time):
     return total / time
 
 def generate_time_interval(day, month, hour, minute):
 
-    h = str(hour)
-    m = str(minute)
     if minute < 59:
-        m2 = str(minute + 1)
+        m2 = minute + 1
         h2 = str(hour)
     else:
-        m2 = "00"
+        m2 = 0
         h2 = str(hour + 1)
 
-    s = h + ":" + m + ":00"
+    if minute < 10:
+        m = "0" + str(minute)
+    else:
+        m = str(minute)
+
+    if m2 < 10:
+        m2 = "0" + str(m2)
+    else:
+        m2 = str(m2)
+
+    s = str(hour) + ":" + m + ":00"
     e = h2 + ":" + m2 + ":00"
 
     start = "2014-" + month + "-" + day + " " + s
@@ -51,8 +60,8 @@ def match_time_intervals(day, month, gametime):
 
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
-    
-    for m in range(150):
+
+    for m in range(140):
         if minute < 59:
             x, y = generate_time_interval(day, month, hour, minute)
             minute += 1
@@ -75,5 +84,6 @@ def create_text_file(dict, filename):
         f.write(interval + "\t" + str(total) + "\n")
 
 # function call for first game, Brasil v. Croatia
-results = match_time_intervals("12", "6", "17:00:00")
+results = match_time_intervals("12", "06", "20:00:00")
 create_text_file(results, "BRAvCRO.txt")
+# start = 1402602728
