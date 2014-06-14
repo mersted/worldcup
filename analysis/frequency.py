@@ -6,7 +6,6 @@ import sys
 connection = pymongo.MongoClient("localhost", 27017)
 
 db = connection.worldcup
-tweets = db.tweets
 
 def total_tweets_interval(start, end):
 
@@ -17,10 +16,12 @@ def total_tweets_interval(start, end):
 
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}}
     try:
-      total = tweets.count(query)
+      results = db.tweets.find(query)
+      total = results.count()
       return total
     except:
       print("Unexpected error:", sys.exc_info()[0])
+      return 0
 
 
 
@@ -61,7 +62,7 @@ def match_time_intervals(day, month, gametime):
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
 
-    for m in range(140):
+    for m in range(127):
         if minute < 59:
             x, y = generate_time_interval(day, month, hour, minute)
             minute += 1
@@ -84,6 +85,6 @@ def create_text_file(dict, filename):
         f.write(interval + "\t" + str(total) + "\n")
 
 # function call for first game, Brasil v. Croatia
-results = match_time_intervals("12", "06", "20:00:00")
+results = match_time_intervals("12", "06", "19:52:00")
 create_text_file(results, "BRAvCRO.txt")
 # start = 1402602728
