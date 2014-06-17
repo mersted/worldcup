@@ -16,14 +16,28 @@ def total_tweets_interval(start, end):
 
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}}
     try:
-      results = db.tweets.find(query)
+      results = db.tweets2.find(query)
       total = results.count()
       return total
     except:
       print("Unexpected error:", sys.exc_info()[0])
       return 0
 
+def keyword_tweets_interval(start, end, word):
 
+    starttime = datetime.strptime(start, "%Y-%m-%d %H:%M:%S")
+    millistart = calendar.timegm(starttime.utctimetuple())
+    endtime = datetime.strptime(end, "%Y-%m-%d %H:%M:%S")
+    milliend = calendar.timegm(endtime.utctimetuple())
+
+    query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}, '$text' : {'$search' : word}}
+    try:
+      result = db.tweets.find(query)
+      total = results.count()
+      return total
+    except:
+      print("Unexpected error:", sys.exc_info()[0])
+      return 0
 
 def average_tweets_interval(total, time):
     return total / time
@@ -61,18 +75,26 @@ def match_time_intervals(day, month, gametime):
 
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
+    words = "neymar, fred, ref, oscar, croatia, brasil, modric"
+    for word in words:
+        for m in range(25):
+            if minute < 55:
+                x, y = generate_time_interval(day, month, hour, minute)
+                minute += 5
+            else:
+                x, y = generate_time_interval(day, month, hour, minute)
+                if hour < 23:
+                    hour += 1
+                else:
+                    hour = 0
+                minute = 5 - (60 - minute)
 
-    for m in range(25):
-        if minute < 55:
-            x, y = generate_time_interval(day, month, hour, minute)
-            minute += 5
-        else:
-            x, y = generate_time_interval(day, month, hour, minute)
-            hour += 1
-            minute = 5 - (60 - minute)
-
-        tot = total_tweets_interval(x, y)
-        buckets[x] = tot
+            #tot = total_tweets_interval(x, y)
+            tot = keyword_tweets_interval(x, y, word)
+            if word in buckets:
+              buckets[word] += (x, tot)
+            else:
+              buckets[word] = [(x, tot)]
 
     return buckets
 
@@ -81,10 +103,15 @@ def create_text_file(dict, filename):
     f = open(filename, "w")
     print("Creating text file called ", filename)
 
-    for (interval, total) in dict.items():
-        f.write(interval + "\t" + str(total) + "\n")
+    for (word, ls) in dict.items():
+        f.write(word + ":\n")
+        for tup in ls:
+          f.write(tup[0] + "\t" + str(tup[1]) + "\n")
 
-# function call for first game, Brasil v. Croatia
+# function calls for first game, Brasil v. Croatia
 results = match_time_intervals("12", "06", "19:52:00")
-create_text_file(results, "BRAvCRO_2.txt")
+create_text_file(results, "BRAvCRO_3.txt")
+# function calls for first USA game, USA v. Ghana
+results = match_time_intervals("16", "06", "22:52:00")
+create_text_file(results, "USAvGHA.txt")
 # start = 1402602728
