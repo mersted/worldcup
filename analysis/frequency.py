@@ -30,11 +30,11 @@ def average_tweets_interval(total, time):
 
 def generate_time_interval(day, month, hour, minute):
 
-    if minute < 59:
-        m2 = minute + 1
+    if minute < 55:
+        m2 = minute + 5
         h2 = str(hour)
     else:
-        m2 = 0
+        m2 = 5 - (60 - minute)
         h2 = str(hour + 1)
 
     if minute < 10:
@@ -62,14 +62,14 @@ def match_time_intervals(day, month, gametime):
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
 
-    for m in range(127):
-        if minute < 59:
+    for m in range(25):
+        if minute < 55:
             x, y = generate_time_interval(day, month, hour, minute)
-            minute += 1
+            minute += 5
         else:
             x, y = generate_time_interval(day, month, hour, minute)
             hour += 1
-            minute = 0
+            minute = 5 - (60 - minute)
 
         tot = total_tweets_interval(x, y)
         buckets[x] = tot
@@ -86,5 +86,5 @@ def create_text_file(dict, filename):
 
 # function call for first game, Brasil v. Croatia
 results = match_time_intervals("12", "06", "19:52:00")
-create_text_file(results, "BRAvCRO.txt")
+create_text_file(results, "BRAvCRO_2.txt")
 # start = 1402602728
