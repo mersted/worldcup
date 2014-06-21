@@ -125,6 +125,6 @@ def create_text_file(dict, filename):
 results = match_time_intervals("12", "06", "19:52:00")
 create_text_file(results, "BRAvCRO_3.txt")
 # function calls for first USA game, USA v. Ghana
-#results = match_time_intervals("16", "06", "22:52:00")
-#create_text_file(results, "USAvGHA.txt")
+results = match_time_intervals("16", "06", "22:52:00")
+create_text_file(results, "USAvGHA.txt")
 # start = 1402602728
