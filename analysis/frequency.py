@@ -46,10 +46,23 @@ def generate_time_interval(day, month, hour, minute):
 
     if minute < 55:
         m2 = minute + 5
-        h2 = str(hour)
+        h2 = hour
     else:
         m2 = 5 - (60 - minute)
-        h2 = str(hour + 1)
+        if hour < 23:
+            h2 = hour + 1
+        else:
+            h2 = 0
+
+    if hour < 10:
+        h = "0" + str(hour)
+    else:
+        h = str(hour)
+
+    if h2 < 10:
+        h2 = "0" + str(h2)
+    else:
+        h2 = str(h2)
 
     if minute < 10:
         m = "0" + str(minute)
@@ -61,7 +74,7 @@ def generate_time_interval(day, month, hour, minute):
     else:
         m2 = str(m2)
 
-    s = str(hour) + ":" + m + ":00"
+    s = h + ":" + m + ":00"
     e = h2 + ":" + m2 + ":00"
 
     start = "2014-" + month + "-" + day + " " + s
@@ -112,6 +125,6 @@ def create_text_file(dict, filename):
 results = match_time_intervals("12", "06", "19:52:00")
 create_text_file(results, "BRAvCRO_3.txt")
 # function calls for first USA game, USA v. Ghana
-results = match_time_intervals("16", "06", "22:52:00")
-create_text_file(results, "USAvGHA.txt")
+#results = match_time_intervals("16", "06", "22:52:00")
+#create_text_file(results, "USAvGHA.txt")
 # start = 1402602728
