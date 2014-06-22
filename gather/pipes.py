@@ -93,7 +93,7 @@ class MongoPipe:
             pass
 
 class FilePipe:
-    def __init__(self, filename="tweets2.json"):
+    def __init__(self, filename="tweets3.json"):
         self.filename = filename
         self.f = open(filename, 'a')
 
