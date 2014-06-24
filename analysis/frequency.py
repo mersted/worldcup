@@ -132,7 +132,7 @@ def create_text_file(dict, filename):
     print("Creating text file called ", filename)
 
     for (word, tot) in dict.items():
-        f.write(word + "\t" + str(tot))
+        f.write(word + "\t" + str(tot) + "\n")
 
     # for (word, ls) in dict.items():
     #     f.write(word + ":\n")
