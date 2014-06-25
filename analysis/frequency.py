@@ -101,7 +101,7 @@ def match_time_intervals(day, month, gametime):
 
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
-    words = "neymar, fred, ref, oscar, croatia, brasil, modric"
+    words = ["neymar", "fred", "ref", "oscar", "croatia", "brasil", "modric"]
     for word in words:
         tot = keyword_tweets_total(word)
         buckets_tot[word] = tot
