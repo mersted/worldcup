@@ -1,0 +1,7 @@
+dempsey	193118
+ghana	503745
+goal	123722
+usa	747651
+brooks	18417
+bradley	18960
+ayew	6691
