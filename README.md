@@ -13,4 +13,4 @@ Analyze Twitter data during 2014 World Cup games
 To search the text in the tweets for specific games,
 PyMongo and MongoDB.  An index was created for each
 collection of tweets representing a game.  In the
-mongo shell: '''db.tweets.ensureIndex({text : "text"})'''.
+mongo shell: ```db.tweets.ensureIndex({text : "text"})```.
