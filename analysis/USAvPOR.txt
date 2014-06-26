@@ -1,0 +1,7 @@
+dempsey	59125
+jones	21270
+usa	579145
+goal	59662
+portugal	349072
+ronaldo	353265
+varela	432
