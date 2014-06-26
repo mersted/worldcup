@@ -82,7 +82,7 @@ class MongoPipe:
                     }
             self.writeBuf.append(parsed)
             if len(self.writeBuf) > 1000:
-                tweet_id = self.db.tweets3.insert(self.writeBuf)
+                tweet_id = self.db.tweets4.insert(self.writeBuf)
                 del self.writeBuf[0:len(self.writeBuf)]
         except KeyError as e:
             print "Key error", e
@@ -93,7 +93,7 @@ class MongoPipe:
             pass
 
 class FilePipe:
-    def __init__(self, filename="tweets3.json"):
+    def __init__(self, filename="tweets4.json"):
         self.filename = filename
         self.f = open(filename, 'a')
 
