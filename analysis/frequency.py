@@ -29,7 +29,7 @@ def keyword_tweets_total(words):
     for word in words:
         query = {'$text' : {'$search' : word}}
         try:
-          results = db.tweets3.find(query)
+          results = db.tweets4.find(query)
           total = results.count()
           buckets_tot[word] = total
         except:
@@ -137,9 +137,9 @@ def create_text_file(dict, filename):
     #     for tup in ls:
     #       f.write(tup[0] + "\t" + str(tup[1]) + "\n")
 
-words = ["dempsey", "goal", "ronaldo", "jones", "usa", "portugal", "varela"]
+words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
 results = keyword_tweets_total(words)
-create_text_file(results, "USAvPOR.txt")
+create_text_file(results, "USAvGER.txt")
 #results = match_time_intervals("12", "06", "19:52:00")
 #create_text_file(results, "BRAvCRO_3.txt")
 # function calls for first USA game, USA v. Ghana

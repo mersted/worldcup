@@ -1,0 +1,8 @@
+dempsey	16906
+advance	19259
+jones	6199
+usa	508627
+ronaldo	5737
+germany	207369
+muller	5709
+goal	67263
