@@ -17,5 +17,4 @@ the 'text' value of tweets.
 In the mongo shell: ```db.tweets.ensureIndex({text : "text"})```.
 
 To search for tweets containing a specific word:
-
 ```db.tweets.find({'$text' : {'$search' : word}})```
