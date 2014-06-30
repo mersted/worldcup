@@ -46,7 +46,7 @@ def keyword_tweets_interval(start, end, word):
 
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}, '$text' : {'$search' : word}}
     try:
-      results = db.tweets.find(query)
+      results = db.tweets4.find(query)
       total = results.count()
       return total
     except:
@@ -96,13 +96,12 @@ def generate_time_interval(day, month, hour, minute):
 
     return start, end
 
-def match_time_intervals(day, month, gametime):
+def match_time_intervals(day, month, gametime, words):
 
     buckets_int = {}
 
     hour = int(gametime[:2])
     minute = int(gametime[3:5])
-    words = ["dempsey", "goal", "ayew", "brooks", "usa", "ghana", "bradley"]
     for word in words:
         for m in range(25):
             if minute < 55:
@@ -122,24 +121,27 @@ def match_time_intervals(day, month, gametime):
             else:
               buckets_int[word] = [(x, tot)]
 
-    return buckets_tot
+    return buckets_int
 
 def create_text_file(dict, filename):
 
     f = open(filename, "w")
     print("Creating text file called ", filename)
 
-    for (word, tot) in dict.items():
-        f.write(word + "\t" + str(tot) + "\n")
+    # for (word, tot) in dict.items():
+    #     f.write(word + "\t" + str(tot) + "\n")
 
-    # for (word, ls) in dict.items():
-    #     f.write(word + ":\n")
-    #     for tup in ls:
-    #       f.write(tup[0] + "\t" + str(tup[1]) + "\n")
+    for (word, ls) in dict.items():
+        f.write(word + ":\n")
+        for tup in ls:
+          f.write(tup[0] + "\t" + str(tup[1]) + "\n")
+
 
 words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
-results = keyword_tweets_total(words)
-create_text_file(results, "USAvGER.txt")
+results = match_time_intervals("26", "06", "05:55:00", words)
+create_text_file(results, "USAvGER_2.txt")
+# results = keyword_tweets_total(words)
+# create_text_file(results, "USAvGER.txt")
 #results = match_time_intervals("12", "06", "19:52:00")
 #create_text_file(results, "BRAvCRO_3.txt")
 # function calls for first USA game, USA v. Ghana
