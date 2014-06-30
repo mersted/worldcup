@@ -100,9 +100,9 @@ def match_time_intervals(day, month, gametime, words):
 
     buckets_int = {}
 
-    hour = int(gametime[:2])
-    minute = int(gametime[3:5])
     for word in words:
+        hour = int(gametime[:2])
+        minute = int(gametime[3:5])
         for m in range(25):
             if minute < 55:
                 x, y = generate_time_interval(day, month, hour, minute)
@@ -132,13 +132,15 @@ def create_text_file(dict, filename):
     #     f.write(word + "\t" + str(tot) + "\n")
 
     for (word, ls) in dict.items():
-        f.write(word + ":\n")
-        for tup in ls:
-          f.write(tup[0] + "\t" + str(tup[1]) + "\n")
+        print(word)
+        print(ls)
+        # f.write(word + ":\n")
+        # for tup in ls:
+        #   f.write(tup[0] + "\t" + str(tup[1]) + "\n")
 
 
 words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
-results = match_time_intervals("26", "06", "05:55:00", words)
+results = match_time_intervals("26", "06", "17:55:00", words)
 create_text_file(results, "USAvGER_2.txt")
 # results = keyword_tweets_total(words)
 # create_text_file(results, "USAvGER.txt")
