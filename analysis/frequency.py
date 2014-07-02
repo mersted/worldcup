@@ -29,7 +29,7 @@ def keyword_tweets_total(words):
     for word in words:
         query = {'$text' : {'$search' : word}}
         try:
-          results = db.tweets4.find(query)
+          results = db.tweets5.find(query)
           total = results.count()
           buckets_tot[word] = total
         except:
@@ -128,22 +128,24 @@ def create_text_file(dict, filename):
     f = open(filename, "w")
     print("Creating text file called ", filename)
 
-    # for (word, tot) in dict.items():
-    #     f.write(word + "\t" + str(tot) + "\n")
+    for (word, tot) in dict.items():
+        f.write(word + "\t" + str(tot) + "\n")
 
-    for (word, ls) in dict.items():
-        print(word)
-        print(ls)
+    # for (word, ls) in dict.items():
+    #     print(word)
+    #     print(ls)
         # f.write(word + ":\n")
         # for tup in ls:
         #   f.write(tup[0] + "\t" + str(tup[1]) + "\n")
 
 
-words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
-results = match_time_intervals("26", "06", "17:55:00", words)
-create_text_file(results, "USAvGER_2.txt")
-# results = keyword_tweets_total(words)
-# create_text_file(results, "USAvGER.txt")
+# words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
+# results = match_time_intervals("26", "06", "17:55:00", words)
+# create_text_file(results, "USAvGER_2.txt")
+
+words = ["dempsey", "usa", "goal", "belgium", "lukaku", "howard", "bruyne"]
+results = keyword_tweets_total(words)
+create_text_file(results, "USAvBEL.txt")
 #results = match_time_intervals("12", "06", "19:52:00")
 #create_text_file(results, "BRAvCRO_3.txt")
 # function calls for first USA game, USA v. Ghana
