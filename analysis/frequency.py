@@ -103,7 +103,7 @@ def match_time_intervals(day, month, gametime, words):
     for word in words:
         hour = int(gametime[:2])
         minute = int(gametime[3:5])
-        for m in range(25):
+        for m in range(15):
             if minute < 55:
                 x, y = generate_time_interval(day, month, hour, minute)
                 minute += 5
@@ -117,35 +117,32 @@ def match_time_intervals(day, month, gametime, words):
 
             tot = keyword_tweets_interval(x, y, word)
             if word in buckets_int:
-              buckets_int[word] += (x, tot)
+              buckets_int[word][x] = tot
             else:
-              buckets_int[word] = [(x, tot)]
+              buckets_int[word] = {x:tot}
 
     return buckets_int
 
-def create_text_file(dict, filename):
+def create_text_file(data, filename):
 
     f = open(filename, "w")
     print("Creating text file called ", filename)
 
-    for (word, tot) in dict.items():
-        f.write(word + "\t" + str(tot) + "\n")
+    # for (word, tot) in data.items():
+    #     f.write(word + "\t" + str(tot) + "\n")
 
-    # for (word, ls) in dict.items():
-    #     print(word)
-    #     print(ls)
-        # f.write(word + ":\n")
-        # for tup in ls:
-        #   f.write(tup[0] + "\t" + str(tup[1]) + "\n")
+    for (word, x) in data.items():
+        f.write(word + ":\n")
+        for (interval, total) in x.items():
+            f.write(interval + "\t" + str(total) + "\n")
 
+words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
+results = match_time_intervals("26", "06", "15:55:00", words)
+create_text_file(results, "USAvGER_2.txt")
 
-# words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
-# results = match_time_intervals("26", "06", "17:55:00", words)
-# create_text_file(results, "USAvGER_2.txt")
-
-words = ["dempsey", "usa", "goal", "belgium", "lukaku", "howard", "bruyne"]
-results = keyword_tweets_total(words)
-create_text_file(results, "USAvBEL.txt")
+# words = ["dempsey", "usa", "goal", "belgium", "lukaku", "howard", "bruyne"]
+# results = keyword_tweets_total(words)
+# create_text_file(results, "USAvBEL.txt")
 #results = match_time_intervals("12", "06", "19:52:00")
 #create_text_file(results, "BRAvCRO_3.txt")
 # function calls for first USA game, USA v. Ghana
