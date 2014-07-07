@@ -29,7 +29,7 @@ def keyword_tweets_total(words):
     for word in words:
         query = {'$text' : {'$search' : word}}
         try:
-          results = db.tweets5.find(query)
+          results = db.tweets2.find(query)
           total = results.count()
           buckets_tot[word] = total
         except:
@@ -46,7 +46,7 @@ def keyword_tweets_interval(start, end, word):
 
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}, '$text' : {'$search' : word}}
     try:
-      results = db.tweets4.find(query)
+      results = db.tweets2.find(query)
       total = results.count()
       return total
     except:
@@ -136,9 +136,9 @@ def create_text_file(data, filename):
         for (interval, total) in x.items():
             f.write(interval + "\t" + str(total) + "\n")
 
-words = ["dempsey", "goal", "advance", "ronaldo", "jones", "usa", "germany", "muller"]
-results = match_time_intervals("26", "06", "15:55:00", words)
-create_text_file(results, "USAvGER_2.txt")
+words = ["dempsey", "goal", "brooks", "ayew", "ghana", "usa", "bradley", "gyan", "howard"]
+results = match_time_intervals("16", "06", "22:52:00", words)
+create_text_file(results, "USAvGHA_2.txt")
 
 # words = ["dempsey", "usa", "goal", "belgium", "lukaku", "howard", "bruyne"]
 # results = keyword_tweets_total(words)
