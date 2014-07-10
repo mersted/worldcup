@@ -29,7 +29,7 @@ def keyword_tweets_total(words):
     for word in words:
         query = {'$text' : {'$search' : word}}
         try:
-          results = db.tweets2.find(query)
+          results = db.tweets3.find(query)
           total = results.count()
           buckets_tot[word] = total
         except:
@@ -46,7 +46,7 @@ def keyword_tweets_interval(start, end, word):
 
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}, '$text' : {'$search' : word}}
     try:
-      results = db.tweets2.find(query)
+      results = db.tweets3.find(query)
       total = results.count()
       return total
     except:
@@ -103,7 +103,7 @@ def match_time_intervals(day, month, gametime, words):
     for word in words:
         hour = int(gametime[:2])
         minute = int(gametime[3:5])
-        for m in range(15):
+        for m in range(20):
             if minute < 55:
                 x, y = generate_time_interval(day, month, hour, minute)
                 minute += 5
@@ -136,15 +136,6 @@ def create_text_file(data, filename):
         for (interval, total) in x.items():
             f.write(interval + "\t" + str(total) + "\n")
 
-words = ["dempsey", "goal", "brooks", "ayew", "ghana", "usa", "bradley", "gyan", "howard"]
-results = match_time_intervals("16", "06", "22:52:00", words)
-create_text_file(results, "USAvGHA_2.txt")
-
-# words = ["dempsey", "usa", "goal", "belgium", "lukaku", "howard", "bruyne"]
-# results = keyword_tweets_total(words)
-# create_text_file(results, "USAvBEL.txt")
-#results = match_time_intervals("12", "06", "19:52:00")
-#create_text_file(results, "BRAvCRO_3.txt")
-# function calls for first USA game, USA v. Ghana
-#results = match_time_intervals("16", "06", "22:52:00")
-#create_text_file(results, "USAvGHA.txt")
+words = ["dempsey", "goal", "jones", "nani", "portugal", "usa", "varela", "ronaldo", "howard"]
+results = match_time_intervals("26", "06", "13:52:00", words)
+create_text_file(results, "USAvPOR_2.txt")

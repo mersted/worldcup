@@ -6,7 +6,7 @@ import time
 
 
 if __name__ == '__main__':
-    words = "usa,america,belgium,worldcup,worldcup2014,dempsey,bradley,hazard,kompany"
+    words = "andes,brahma,norte,patagonia,quilmes,budweiser,stellaartois"
     pipes = []
     for word in words.split(","):
         pipes.append(RedisPipe(word, period=15, db=1, ns="track:" + word))

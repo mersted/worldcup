@@ -22,11 +22,11 @@ class WorldCup:
         date = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
         milli = calendar.timegm(date.utctimetuple())
         try:
-            self.db.tweets.update({'_id' : tweet['_id']}, {'$set' : {'created_at' : milli}})
+            self.db.tweets3.update({'_id' : tweet['_id']}, {'$set' : {'created_at' : milli}})
         except:
             print("Unexpected error:", sys.exc_info()[0])
 
 w = WorldCup()
-cursor = w.db.tweets.find()
+cursor = w.db.tweets3.find()
 for tweet in cursor:
     w.update_tweet(tweet)
