@@ -21,6 +21,6 @@ To search for tweets containing a specific word: ```db.tweets.find({'$text' : {'
 ## Performance
 A few indexes were added to each collection of tweets in Mongo to improve querying speed
 
-On the 'created_at' field: ```db.tweets.ensureIndex({'created_at' : 1})
+On the 'created_at' field: ```db.tweets.ensureIndex({'created_at' : 1})```
 
-On the 'text' field: ```db.tweets.ensureIndex({'text : 1'})
+On the 'text' field: ```db.tweets.ensureIndex({'text : 1'})```
