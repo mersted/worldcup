@@ -137,5 +137,5 @@ def create_text_file(data, filename):
             f.write(interval + "\t" + str(total) + "\n")
 
 words = ["dempsey", "goal", "jones", "nani", "portugal", "usa", "varela", "ronaldo", "howard"]
-results = match_time_intervals("26", "06", "13:52:00", words)
+results = match_time_intervals("22", "06", "21:52:00", words)
 create_text_file(results, "USAvPOR_2.txt")
