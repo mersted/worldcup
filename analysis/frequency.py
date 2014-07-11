@@ -29,7 +29,7 @@ def keyword_tweets_total(words):
     for word in words:
         query = {'$text' : {'$search' : word}}
         try:
-          results = db.tweets3.find(query)
+          results = db.tweets5.find(query)
           total = results.count()
           buckets_tot[word] = total
         except:
@@ -46,15 +46,12 @@ def keyword_tweets_interval(start, end, word):
 
     query = {'created_at' : {'$gte' : millistart, '$lte' : milliend}, '$text' : {'$search' : word}}
     try:
-      results = db.tweets3.find(query)
+      results = db.tweets5.find(query)
       total = results.count()
       return total
     except:
       print("Unexpected error:", sys.exc_info()[0])
       return 0
-
-def average_tweets_interval(total, time):
-    return total / time
 
 def generate_time_interval(day, month, hour, minute):
 
@@ -103,7 +100,7 @@ def match_time_intervals(day, month, gametime, words):
     for word in words:
         hour = int(gametime[:2])
         minute = int(gametime[3:5])
-        for m in range(20):
+        for m in range(36):
             if minute < 55:
                 x, y = generate_time_interval(day, month, hour, minute)
                 minute += 5
@@ -128,14 +125,11 @@ def create_text_file(data, filename):
     f = open(filename, "w")
     print("Creating text file called ", filename)
 
-    # for (word, tot) in data.items():
-    #     f.write(word + "\t" + str(tot) + "\n")
-
     for (word, x) in data.items():
         f.write(word + ":\n")
         for (interval, total) in x.items():
             f.write(interval + "\t" + str(total) + "\n")
 
-words = ["dempsey", "goal", "jones", "nani", "portugal", "usa", "varela", "ronaldo", "howard"]
-results = match_time_intervals("22", "06", "21:52:00", words)
-create_text_file(results, "USAvPOR_2.txt")
+words = ["dempsey", "goal", "howard", "green", "belgium", "usa", "lukaku", "bruyne", "knockout"]
+results = match_time_intervals("01", "07", "19:52:00", words)
+create_text_file(results, "USAvBEL_2.txt")
