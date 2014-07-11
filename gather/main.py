@@ -18,15 +18,15 @@ class WorldCup:
     def update_tweet(self, tweet):
         #change timestamp in tweet to milliseconds
         timedate = tweet['created_at'].split()
-        time = "2014-06-" + timedate[2] + " " + timedate[3]
+        time = "2014-07-" + timedate[2] + " " + timedate[3]
         date = datetime.strptime(time, "%Y-%m-%d %H:%M:%S")
         milli = calendar.timegm(date.utctimetuple())
         try:
-            self.db.tweets3.update({'_id' : tweet['_id']}, {'$set' : {'created_at' : milli}})
+            self.db.tweets5.update({'_id' : tweet['_id']}, {'$set' : {'created_at' : milli}})
         except:
             print("Unexpected error:", sys.exc_info()[0])
 
 w = WorldCup()
-cursor = w.db.tweets3.find()
+cursor = w.db.tweets5.find()
 for tweet in cursor:
     w.update_tweet(tweet)
