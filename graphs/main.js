@@ -1,4 +1,4 @@
-require(['Downloads/Chart.js'], function(Chart){
+require(['Downloads/Chart.js/Chart.js'], function(Chart){
 	var Chartjs = Chart.noConflict();
 });
 
@@ -6,7 +6,7 @@ var ctx = document.getElementById("myChart").getContext("2d");
 var myLineChart = new Chart(ctx).Line(data, options);
 
 var data = {
-	labels: ["22:52", "22:57", "23:02", "23:07", "23:12", "23:17", "23:22", "23:27", "23:32", "23:37", "23:42", "23:47", "23:52"]
+	labels: ["22:52", "22:57", "23:02", "23:07", "23:12", "23:17", "23:22", "23:27", "23:32", "23:37", "23:42", "23:47", "23:52"],
 	datasets: [
 		{
 			label: "Dempsey",
