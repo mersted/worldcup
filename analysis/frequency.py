@@ -100,7 +100,7 @@ def match_time_intervals(day, month, gametime, words):
     for word in words:
         hour = int(gametime[:2])
         minute = int(gametime[3:5])
-        for m in range(36):
+        for m in range(25):
             if minute < 55:
                 x, y = generate_time_interval(day, month, hour, minute)
                 minute += 5
@@ -130,6 +130,7 @@ def create_text_file(data, filename):
         for (interval, total) in x.items():
             f.write(interval + "\t" + str(total) + "\n")
 
+#testing indexes
 words = ["dempsey", "goal", "howard", "green", "belgium", "usa", "lukaku", "bruyne", "knockout"]
 results = match_time_intervals("01", "07", "19:52:00", words)
-create_text_file(results, "USAvBEL_2.txt")
+create_text_file(results, "USAvBEL_3.txt")
