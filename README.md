@@ -23,6 +23,7 @@ Few tweets have geo location data, but most have
 timezone of the tweet.
 
 In the mongo shell:
+
 ```db.tweets.aggregate([{$match : { "location.user_timezone" : {$ne : null}}}, {$group : { _id : "$location.user_timezone", total : {$sum : 1}}}, {$sort : { total : -1}}, {$limit : 10}])```
 
 ## Performance
