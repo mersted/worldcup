@@ -18,6 +18,14 @@ In the mongo shell: ```db.tweets.ensureIndex({text : "text"})```.
 
 To search for tweets containing a specific word: ```db.tweets.find({'$text' : {'$search' : word}})```
 
+## Location Search
+Few tweets have geo location data, but most have
+timezone of the tweet.
+
+In the mongo shell, this finds top ten timezones from where tweets were sent:
+
+```db.tweets.aggregate([{$match : { "location.user_timezone" : {$ne : null}}}, {$group : { _id : "$location.user_timezone", total : {$sum : 1}}}, {$sort : { total : -1}}, {$limit : 10}])```
+
 ## Performance
 A few indexes were added to each collection of tweets in Mongo to improve querying speed
 
